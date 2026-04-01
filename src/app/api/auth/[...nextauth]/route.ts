@@ -1,0 +1,8 @@
+import NextAuth from 'next-auth';
+import { authOptions } from '@/lib/auth/nextauth';
+
+// Force dynamic to prevent build-time page data collection
+export const dynamic = 'force-dynamic';
+
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };
