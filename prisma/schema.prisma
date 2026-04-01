@@ -1,0 +1,273 @@
+// ============================================
+// ALL-IN-ONE FILE LAB - Database Schema
+// Production-grade SaaS platform
+// ============================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// USER SYSTEM
+// ============================================
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Plan {
+  FREE
+  PRO
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELED
+  PAST_DUE
+  EXPIRED
+  TRIALING
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  password      String?
+  avatar        String?
+  role          Role      @default(USER)
+  plan          Plan      @default(FREE)
+  emailVerified DateTime?
+  isBlocked     Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  subscription  Subscription?
+  usage         Usage[]
+  files         FileRecord[]
+  sessions      Session[]
+  refreshTokens RefreshToken[]
+  accounts      Account[]
+  auditLogs     AuditLog[]
+
+  @@index([email])
+  @@index([plan])
+  @@index([createdAt])
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  revoked   Boolean  @default(false)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([token])
+}
+
+// ============================================
+// SUBSCRIPTION & BILLING
+// ============================================
+
+model Subscription {
+  id                   String             @id @default(cuid())
+  userId               String             @unique
+  stripeCustomerId     String?            @unique
+  stripeSubscriptionId String?            @unique
+  stripePriceId        String?
+  status               SubscriptionStatus @default(ACTIVE)
+  currentPeriodStart   DateTime?
+  currentPeriodEnd     DateTime?
+  cancelAtPeriodEnd    Boolean            @default(false)
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  payments Payment[]
+
+  @@index([stripeCustomerId])
+  @@index([stripeSubscriptionId])
+}
+
+model Payment {
+  id               String   @id @default(cuid())
+  subscriptionId   String
+  stripePaymentId  String?  @unique
+  amount           Int
+  currency         String   @default("usd")
+  status           String
+  createdAt        DateTime @default(now())
+
+  subscription Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  @@index([subscriptionId])
+  @@index([createdAt])
+}
+
+// ============================================
+// USAGE TRACKING
+// ============================================
+
+model Usage {
+  id        String   @id @default(cuid())
+  userId    String
+  date      DateTime @default(now()) @db.Date
+  count     Int      @default(0)
+  bytesUsed BigInt   @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+  @@index([userId])
+  @@index([date])
+}
+
+// ============================================
+// FILE PROCESSING
+// ============================================
+
+enum FileStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum FileOperation {
+  // PDF
+  IMAGE_TO_PDF
+  TEXT_TO_PDF
+  MERGE_PDF
+  SPLIT_PDF
+  COMPRESS_PDF
+  // Images
+  IMAGE_CONVERT
+  IMAGE_RESIZE
+  IMAGE_COMPRESS
+  // Media
+  VIDEO_CONVERT
+  AUDIO_EXTRACT
+  // Docs
+  WORD_TO_PDF
+  MARKDOWN_TO_PDF
+  // Utilities
+  ZIP_CREATE
+  ZIP_EXTRACT
+  OCR
+}
+
+model FileRecord {
+  id             String        @id @default(cuid())
+  userId         String
+  operation      FileOperation
+  status         FileStatus    @default(PENDING)
+  inputFileName  String
+  inputFileSize  BigInt
+  inputFileType  String
+  outputFileName String?
+  outputFileSize BigInt?
+  outputFileType String?
+  storagePath    String?
+  outputPath     String?
+  downloadUrl    String?
+  errorMessage   String?
+  processingTime Int?
+  expiresAt      DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+  @@index([expiresAt])
+}
+
+// ============================================
+// ADMIN & LOGGING
+// ============================================
+
+enum AuditAction {
+  LOGIN
+  LOGOUT
+  REGISTER
+  FILE_UPLOAD
+  FILE_PROCESS
+  FILE_DOWNLOAD
+  SUBSCRIPTION_CREATE
+  SUBSCRIPTION_CANCEL
+  PASSWORD_CHANGE
+  SETTINGS_UPDATE
+  ADMIN_BLOCK_USER
+  ADMIN_UNBLOCK_USER
+}
+
+model AuditLog {
+  id        String      @id @default(cuid())
+  userId    String?
+  action    AuditAction
+  details   Json?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime    @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+}
+
+model SystemLog {
+  id        String   @id @default(cuid())
+  level     String
+  message   String
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  @@index([level])
+  @@index([createdAt])
+}
