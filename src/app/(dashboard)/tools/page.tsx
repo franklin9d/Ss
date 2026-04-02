@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useState } from 'react';
 import Card, { CardContent } from '@/components/ui/Card';
 import Input from '@/components/ui/Input';
-import Badge from '@/components/ui/Badge';
 import {
   FiSearch,
   FiFile,
@@ -12,7 +11,7 @@ import {
   FiFilm,
   FiFileText,
   FiPackage,
-  FiArrowRight,
+  FiArrowLeft,
   FiLayers,
   FiScissors,
   FiMinimize2,
@@ -34,39 +33,38 @@ interface Tool {
   category: string;
   acceptedTypes: string;
   color: string;
-  pro?: boolean;
 }
 
 const allTools: Tool[] = [
   // PDF Tools
-  { id: 'image-to-pdf', name: 'Image to PDF', description: 'Convert images to PDF documents', icon: FiFile, operation: 'IMAGE_TO_PDF', category: 'pdf', acceptedTypes: '.jpg,.jpeg,.png,.gif,.webp', color: 'from-red-500 to-orange-500' },
-  { id: 'text-to-pdf', name: 'Text to PDF', description: 'Convert text files to PDF', icon: FiType, operation: 'TEXT_TO_PDF', category: 'pdf', acceptedTypes: '.txt', color: 'from-red-500 to-orange-500' },
-  { id: 'merge-pdf', name: 'Merge PDF', description: 'Combine multiple PDFs into one', icon: FiLayers, operation: 'MERGE_PDF', category: 'pdf', acceptedTypes: '.pdf', color: 'from-red-500 to-orange-500' },
-  { id: 'split-pdf', name: 'Split PDF', description: 'Split PDF into separate pages', icon: FiScissors, operation: 'SPLIT_PDF', category: 'pdf', acceptedTypes: '.pdf', color: 'from-red-500 to-orange-500' },
-  { id: 'compress-pdf', name: 'Compress PDF', description: 'Reduce PDF file size', icon: FiMinimize2, operation: 'COMPRESS_PDF', category: 'pdf', acceptedTypes: '.pdf', color: 'from-red-500 to-orange-500' },
+  { id: 'image-to-pdf', name: 'صورة إلى PDF', description: 'تحويل الصور إلى مستندات PDF', icon: FiFile, operation: 'IMAGE_TO_PDF', category: 'pdf', acceptedTypes: '.jpg,.jpeg,.png,.gif,.webp', color: 'from-red-500 to-orange-500' },
+  { id: 'text-to-pdf', name: 'نص إلى PDF', description: 'تحويل الملفات النصية إلى PDF', icon: FiType, operation: 'TEXT_TO_PDF', category: 'pdf', acceptedTypes: '.txt', color: 'from-red-500 to-orange-500' },
+  { id: 'merge-pdf', name: 'دمج PDF', description: 'دمج عدة ملفات PDF في ملف واحد', icon: FiLayers, operation: 'MERGE_PDF', category: 'pdf', acceptedTypes: '.pdf', color: 'from-red-500 to-orange-500' },
+  { id: 'split-pdf', name: 'تقسيم PDF', description: 'تقسيم PDF إلى صفحات منفصلة', icon: FiScissors, operation: 'SPLIT_PDF', category: 'pdf', acceptedTypes: '.pdf', color: 'from-red-500 to-orange-500' },
+  { id: 'compress-pdf', name: 'ضغط PDF', description: 'تقليل حجم ملف PDF', icon: FiMinimize2, operation: 'COMPRESS_PDF', category: 'pdf', acceptedTypes: '.pdf', color: 'from-red-500 to-orange-500' },
   // Image Tools
-  { id: 'image-convert', name: 'Convert Image', description: 'Convert between image formats', icon: FiRefreshCw, operation: 'IMAGE_CONVERT', category: 'images', acceptedTypes: '.jpg,.jpeg,.png,.gif,.webp,.bmp,.tiff', color: 'from-blue-500 to-cyan-500' },
-  { id: 'image-resize', name: 'Resize Image', description: 'Resize images to specific dimensions', icon: FiMaximize2, operation: 'IMAGE_RESIZE', category: 'images', acceptedTypes: '.jpg,.jpeg,.png,.gif,.webp', color: 'from-blue-500 to-cyan-500' },
-  { id: 'image-compress', name: 'Compress Image', description: 'Compress images without quality loss', icon: FiMinimize2, operation: 'IMAGE_COMPRESS', category: 'images', acceptedTypes: '.jpg,.jpeg,.png,.webp', color: 'from-blue-500 to-cyan-500' },
+  { id: 'image-convert', name: 'تحويل صورة', description: 'التحويل بين صيغ الصور', icon: FiRefreshCw, operation: 'IMAGE_CONVERT', category: 'images', acceptedTypes: '.jpg,.jpeg,.png,.gif,.webp,.bmp,.tiff', color: 'from-blue-500 to-cyan-500' },
+  { id: 'image-resize', name: 'تغيير حجم صورة', description: 'تغيير أبعاد الصور', icon: FiMaximize2, operation: 'IMAGE_RESIZE', category: 'images', acceptedTypes: '.jpg,.jpeg,.png,.gif,.webp', color: 'from-blue-500 to-cyan-500' },
+  { id: 'image-compress', name: 'ضغط صورة', description: 'ضغط الصور مع الحفاظ على الجودة', icon: FiMinimize2, operation: 'IMAGE_COMPRESS', category: 'images', acceptedTypes: '.jpg,.jpeg,.png,.webp', color: 'from-blue-500 to-cyan-500' },
   // Media Tools
-  { id: 'video-convert', name: 'Video Convert', description: 'Convert video formats', icon: FiFilm, operation: 'VIDEO_CONVERT', category: 'media', acceptedTypes: '.mp4,.avi,.mov,.webm', color: 'from-purple-500 to-pink-500', pro: true },
-  { id: 'audio-extract', name: 'Extract Audio', description: 'Extract audio from video files', icon: FiMusic, operation: 'AUDIO_EXTRACT', category: 'media', acceptedTypes: '.mp4,.avi,.mov,.webm', color: 'from-purple-500 to-pink-500', pro: true },
+  { id: 'video-convert', name: 'تحويل فيديو', description: 'تحويل صيغ الفيديو', icon: FiFilm, operation: 'VIDEO_CONVERT', category: 'media', acceptedTypes: '.mp4,.avi,.mov,.webm', color: 'from-purple-500 to-pink-500' },
+  { id: 'audio-extract', name: 'استخراج صوت', description: 'استخراج الصوت من ملفات الفيديو', icon: FiMusic, operation: 'AUDIO_EXTRACT', category: 'media', acceptedTypes: '.mp4,.avi,.mov,.webm', color: 'from-purple-500 to-pink-500' },
   // Document Tools
-  { id: 'word-to-pdf', name: 'Word to PDF', description: 'Convert Word documents to PDF', icon: FiFileText, operation: 'WORD_TO_PDF', category: 'docs', acceptedTypes: '.doc,.docx', color: 'from-emerald-500 to-teal-500' },
-  { id: 'markdown-to-pdf', name: 'Markdown to PDF', description: 'Convert Markdown to PDF', icon: FiFileText, operation: 'MARKDOWN_TO_PDF', category: 'docs', acceptedTypes: '.md,.txt', color: 'from-emerald-500 to-teal-500' },
+  { id: 'word-to-pdf', name: 'Word إلى PDF', description: 'تحويل مستندات Word إلى PDF', icon: FiFileText, operation: 'WORD_TO_PDF', category: 'docs', acceptedTypes: '.doc,.docx', color: 'from-emerald-500 to-teal-500' },
+  { id: 'markdown-to-pdf', name: 'Markdown إلى PDF', description: 'تحويل Markdown إلى PDF', icon: FiFileText, operation: 'MARKDOWN_TO_PDF', category: 'docs', acceptedTypes: '.md,.txt', color: 'from-emerald-500 to-teal-500' },
   // Utilities
-  { id: 'zip-create', name: 'Create ZIP', description: 'Create ZIP archive from files', icon: FiArchive, operation: 'ZIP_CREATE', category: 'utilities', acceptedTypes: '*', color: 'from-yellow-500 to-orange-500' },
-  { id: 'zip-extract', name: 'Extract ZIP', description: 'Extract files from ZIP archive', icon: FiPackage, operation: 'ZIP_EXTRACT', category: 'utilities', acceptedTypes: '.zip', color: 'from-yellow-500 to-orange-500' },
-  { id: 'ocr', name: 'OCR', description: 'Extract text from images', icon: FiEye, operation: 'OCR', category: 'utilities', acceptedTypes: '.jpg,.jpeg,.png,.gif,.webp,.bmp,.tiff', color: 'from-yellow-500 to-orange-500' },
+  { id: 'zip-create', name: 'إنشاء ZIP', description: 'إنشاء أرشيف ZIP من الملفات', icon: FiArchive, operation: 'ZIP_CREATE', category: 'utilities', acceptedTypes: '*', color: 'from-yellow-500 to-orange-500' },
+  { id: 'zip-extract', name: 'استخراج ZIP', description: 'استخراج الملفات من أرشيف ZIP', icon: FiPackage, operation: 'ZIP_EXTRACT', category: 'utilities', acceptedTypes: '.zip', color: 'from-yellow-500 to-orange-500' },
+  { id: 'ocr', name: 'التعرف على النصوص', description: 'استخراج النصوص من الصور', icon: FiEye, operation: 'OCR', category: 'utilities', acceptedTypes: '.jpg,.jpeg,.png,.gif,.webp,.bmp,.tiff', color: 'from-yellow-500 to-orange-500' },
 ];
 
 const categories = [
-  { id: 'all', name: 'All Tools', icon: FiLayers },
+  { id: 'all', name: 'جميع الأدوات', icon: FiLayers },
   { id: 'pdf', name: 'PDF', icon: FiFile },
-  { id: 'images', name: 'Images', icon: FiImage },
-  { id: 'media', name: 'Media', icon: FiFilm },
-  { id: 'docs', name: 'Documents', icon: FiFileText },
-  { id: 'utilities', name: 'Utilities', icon: FiPackage },
+  { id: 'images', name: 'الصور', icon: FiImage },
+  { id: 'media', name: 'الوسائط', icon: FiFilm },
+  { id: 'docs', name: 'المستندات', icon: FiFileText },
+  { id: 'utilities', name: 'أدوات مساعدة', icon: FiPackage },
 ];
 
 export default function ToolsPage() {
@@ -84,15 +82,15 @@ export default function ToolsPage() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">All Tools</h1>
-        <p className="text-gray-400">Choose a tool to get started with your file processing</p>
+        <h1 className="text-3xl font-bold text-white mb-2">جميع الأدوات</h1>
+        <p className="text-gray-400">اختر أداة للبدء في معالجة ملفاتك</p>
       </div>
 
       {/* Search & Filters */}
       <div className="flex flex-col sm:flex-row gap-4 mb-8">
         <div className="flex-1">
           <Input
-            placeholder="Search tools..."
+            placeholder="ابحث عن أداة..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             icon={<FiSearch size={18} />}
@@ -126,12 +124,11 @@ export default function ToolsPage() {
                   <div className={`w-12 h-12 bg-gradient-to-br ${tool.color} rounded-xl flex items-center justify-center`}>
                     <tool.icon className="text-white" size={24} />
                   </div>
-                  {tool.pro && <Badge variant="pro">PRO</Badge>}
                 </div>
                 <h3 className="text-white font-semibold mb-1">{tool.name}</h3>
                 <p className="text-gray-500 text-sm flex-1">{tool.description}</p>
                 <div className="mt-4 flex items-center gap-1 text-indigo-400 text-sm font-medium">
-                  Use tool <FiArrowRight size={14} />
+                  استخدم الأداة <FiArrowLeft size={14} />
                 </div>
               </CardContent>
             </Card>
@@ -141,7 +138,7 @@ export default function ToolsPage() {
 
       {filteredTools.length === 0 && (
         <div className="text-center py-16">
-          <p className="text-gray-500 text-lg">No tools found matching your search.</p>
+          <p className="text-gray-500 text-lg">لم يتم العثور على أدوات تطابق بحثك.</p>
         </div>
       )}
     </div>

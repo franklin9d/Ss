@@ -11,39 +11,39 @@ export default function Footer() {
           <div className="md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">FL</span>
+                <span className="text-white font-bold text-sm">م</span>
               </div>
               <span className="text-white font-bold text-lg">
-                File <span className="text-indigo-400">Lab</span>
+                مختبر <span className="text-indigo-400">الملفات</span>
               </span>
             </div>
             <p className="text-gray-500 text-sm leading-relaxed">
-              All-in-one file conversion and processing platform. Fast, secure, and reliable.
+              منصة شاملة لتحويل ومعالجة الملفات. سريعة، آمنة، وموثوقة. جميع الأدوات مجانية بالكامل.
             </p>
           </div>
 
           {/* Tools */}
           <div>
-            <h4 className="text-white font-semibold text-sm mb-4">Tools</h4>
+            <h4 className="text-white font-semibold text-sm mb-4">الأدوات</h4>
             <ul className="space-y-2">
               <li>
                 <Link href="/tools/pdf" className="text-gray-500 hover:text-gray-300 text-sm transition-colors">
-                  PDF Tools
+                  أدوات PDF
                 </Link>
               </li>
               <li>
                 <Link href="/tools/images" className="text-gray-500 hover:text-gray-300 text-sm transition-colors">
-                  Image Tools
+                  أدوات الصور
                 </Link>
               </li>
               <li>
                 <Link href="/tools/docs" className="text-gray-500 hover:text-gray-300 text-sm transition-colors">
-                  Document Tools
+                  أدوات المستندات
                 </Link>
               </li>
               <li>
                 <Link href="/tools/utilities" className="text-gray-500 hover:text-gray-300 text-sm transition-colors">
-                  Utilities
+                  أدوات مساعدة
                 </Link>
               </li>
             </ul>
@@ -51,26 +51,21 @@ export default function Footer() {
 
           {/* Company */}
           <div>
-            <h4 className="text-white font-semibold text-sm mb-4">Company</h4>
+            <h4 className="text-white font-semibold text-sm mb-4">الشركة</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/pricing" className="text-gray-500 hover:text-gray-300 text-sm transition-colors">
-                  Pricing
+                <Link href="#" className="text-gray-500 hover:text-gray-300 text-sm transition-colors">
+                  من نحن
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-gray-500 hover:text-gray-300 text-sm transition-colors">
-                  About
+                  سياسة الخصوصية
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-gray-500 hover:text-gray-300 text-sm transition-colors">
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-gray-500 hover:text-gray-300 text-sm transition-colors">
-                  Terms of Service
+                  شروط الاستخدام
                 </Link>
               </li>
             </ul>
@@ -78,21 +73,21 @@ export default function Footer() {
 
           {/* Support */}
           <div>
-            <h4 className="text-white font-semibold text-sm mb-4">Support</h4>
+            <h4 className="text-white font-semibold text-sm mb-4">الدعم</h4>
             <ul className="space-y-2">
               <li>
                 <Link href="#" className="text-gray-500 hover:text-gray-300 text-sm transition-colors">
-                  Documentation
+                  التوثيق
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-gray-500 hover:text-gray-300 text-sm transition-colors">
-                  Contact Us
+                  تواصل معنا
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-gray-500 hover:text-gray-300 text-sm transition-colors">
-                  Status
+                  حالة الخدمة
                 </Link>
               </li>
             </ul>
@@ -101,7 +96,7 @@ export default function Footer() {
 
         <div className="mt-12 pt-8 border-t border-gray-800/50">
           <p className="text-gray-600 text-sm text-center">
-            &copy; {new Date().getFullYear()} File Lab. All rights reserved.
+            &copy; {new Date().getFullYear()} مختبر الملفات. جميع الحقوق محفوظة.
           </p>
         </div>
       </div>

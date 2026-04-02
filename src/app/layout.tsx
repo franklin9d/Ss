@@ -1,26 +1,26 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Cairo } from 'next/font/google';
 import './globals.css';
 import Providers from '@/components/Providers';
 
-const inter = Inter({ subsets: ['latin'] });
+const cairo = Cairo({ subsets: ['arabic', 'latin'] });
 
 export const metadata: Metadata = {
-  title: 'File Lab - All-in-One File Conversion & Processing Platform',
+  title: 'مختبر الملفات - منصة تحويل ومعالجة الملفات الشاملة',
   description:
-    'Convert, compress, merge, and transform your files with ease. PDF tools, image processing, document conversion, and more. Fast, secure, and reliable.',
+    'حوّل، اضغط، ادمج، وعدّل ملفاتك بسهولة. أدوات PDF، معالجة الصور، تحويل المستندات، والمزيد. سريع، آمن، وموثوق.',
   keywords: [
-    'file converter',
-    'PDF tools',
-    'image converter',
-    'document processing',
-    'file compression',
-    'merge PDF',
-    'OCR',
+    'محول ملفات',
+    'أدوات PDF',
+    'محول صور',
+    'معالجة مستندات',
+    'ضغط ملفات',
+    'دمج PDF',
+    'التعرف على النصوص',
   ],
   openGraph: {
-    title: 'File Lab - All-in-One File Conversion Platform',
-    description: 'Convert, compress, and transform your files with ease.',
+    title: 'مختبر الملفات - منصة تحويل الملفات الشاملة',
+    description: 'حوّل، اضغط، وعدّل ملفاتك بسهولة.',
     type: 'website',
   },
 };
@@ -31,8 +31,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${inter.className} bg-gray-950 text-white antialiased`}>
+    <html lang="ar" dir="rtl" className="dark">
+      <body className={`${cairo.className} bg-gray-950 text-white antialiased`}>
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -9,8 +9,8 @@ const utilityTools = [
   {
     id: 'zip-create',
     operation: 'ZIP_CREATE' as FileOperation,
-    title: 'Create ZIP',
-    description: 'Compress multiple files into a single ZIP archive.',
+    title: 'إنشاء ZIP',
+    description: 'ضغط عدة ملفات في أرشيف ZIP واحد.',
     acceptedTypes: '*',
     multiple: true,
     maxFiles: 50,
@@ -18,15 +18,15 @@ const utilityTools = [
   {
     id: 'zip-extract',
     operation: 'ZIP_EXTRACT' as FileOperation,
-    title: 'Extract ZIP',
-    description: 'Extract all files from a ZIP archive.',
+    title: 'استخراج ZIP',
+    description: 'استخراج جميع الملفات من أرشيف ZIP.',
     acceptedTypes: '.zip',
   },
   {
     id: 'ocr',
     operation: 'OCR' as FileOperation,
-    title: 'OCR - Text Recognition',
-    description: 'Extract text from images using advanced optical character recognition.',
+    title: 'التعرف على النصوص (OCR)',
+    description: 'استخراج النصوص من الصور باستخدام تقنية التعرف الضوئي المتقدمة.',
     acceptedTypes: '.jpg,.jpeg,.png,.gif,.webp,.bmp,.tiff,.tif',
   },
 ];
@@ -71,7 +71,7 @@ function UtilityToolsContent() {
 
 export default function UtilityToolsPage() {
   return (
-    <Suspense fallback={<div className="animate-pulse text-gray-500 py-12 text-center">Loading tools...</div>}>
+    <Suspense fallback={<div className="animate-pulse text-gray-500 py-12 text-center">جارٍ تحميل الأدوات...</div>}>
       <UtilityToolsContent />
     </Suspense>
   );

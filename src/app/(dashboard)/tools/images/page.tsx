@@ -9,8 +9,8 @@ const imageTools = [
   {
     id: 'image-convert',
     operation: 'IMAGE_CONVERT' as FileOperation,
-    title: 'Convert Image',
-    description: 'Convert images between formats (JPEG, PNG, WebP, GIF, TIFF, AVIF).',
+    title: 'تحويل صورة',
+    description: 'تحويل الصور بين الصيغ المختلفة (JPEG, PNG, WebP, GIF, TIFF, AVIF).',
     acceptedTypes: '.jpg,.jpeg,.png,.gif,.webp,.bmp,.tiff,.tif',
     multiple: false,
     maxFiles: 1,
@@ -18,8 +18,8 @@ const imageTools = [
   {
     id: 'image-resize',
     operation: 'IMAGE_RESIZE' as FileOperation,
-    title: 'Resize Image',
-    description: 'Resize images to exact dimensions while maintaining quality.',
+    title: 'تغيير حجم صورة',
+    description: 'تغيير أبعاد الصور مع الحفاظ على الجودة.',
     acceptedTypes: '.jpg,.jpeg,.png,.gif,.webp',
     multiple: false,
     maxFiles: 1,
@@ -27,8 +27,8 @@ const imageTools = [
   {
     id: 'image-compress',
     operation: 'IMAGE_COMPRESS' as FileOperation,
-    title: 'Compress Image',
-    description: 'Reduce image file size while preserving visual quality.',
+    title: 'ضغط صورة',
+    description: 'تقليل حجم الصورة مع الحفاظ على الجودة البصرية.',
     acceptedTypes: '.jpg,.jpeg,.png,.webp',
     multiple: false,
     maxFiles: 1,
@@ -69,7 +69,7 @@ function ImageToolsContent() {
         return (
           <div className="space-y-4">
             <div>
-              <label className="block text-sm text-gray-300 mb-2">Output Format</label>
+              <label className="block text-sm text-gray-300 mb-2">صيغة الإخراج</label>
               <select
                 value={format}
                 onChange={(e) => setFormat(e.target.value)}
@@ -84,7 +84,7 @@ function ImageToolsContent() {
               </select>
             </div>
             <div>
-              <label className="block text-sm text-gray-300 mb-2">Quality ({quality}%)</label>
+              <label className="block text-sm text-gray-300 mb-2">الجودة ({quality}%)</label>
               <input
                 type="range"
                 min="10"
@@ -100,22 +100,22 @@ function ImageToolsContent() {
         return (
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm text-gray-300 mb-2">Width (px)</label>
+              <label className="block text-sm text-gray-300 mb-2">العرض (بكسل)</label>
               <input
                 type="number"
                 value={width}
                 onChange={(e) => setWidth(e.target.value)}
-                placeholder="Auto"
+                placeholder="تلقائي"
                 className="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-2.5 text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-300 mb-2">Height (px)</label>
+              <label className="block text-sm text-gray-300 mb-2">الارتفاع (بكسل)</label>
               <input
                 type="number"
                 value={height}
                 onChange={(e) => setHeight(e.target.value)}
-                placeholder="Auto"
+                placeholder="تلقائي"
                 className="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-2.5 text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               />
             </div>
@@ -124,7 +124,7 @@ function ImageToolsContent() {
       case 'image-compress':
         return (
           <div>
-            <label className="block text-sm text-gray-300 mb-2">Quality ({quality}%)</label>
+            <label className="block text-sm text-gray-300 mb-2">الجودة ({quality}%)</label>
             <input
               type="range"
               min="10"
@@ -133,7 +133,7 @@ function ImageToolsContent() {
               onChange={(e) => setQuality(parseInt(e.target.value))}
               className="w-full accent-indigo-500"
             />
-            <p className="text-xs text-gray-500 mt-1">Lower quality = smaller file size</p>
+            <p className="text-xs text-gray-500 mt-1">جودة أقل = حجم ملف أصغر</p>
           </div>
         );
       default:
@@ -176,7 +176,7 @@ function ImageToolsContent() {
 
 export default function ImageToolsPage() {
   return (
-    <Suspense fallback={<div className="animate-pulse text-gray-500 py-12 text-center">Loading tools...</div>}>
+    <Suspense fallback={<div className="animate-pulse text-gray-500 py-12 text-center">جارٍ تحميل الأدوات...</div>}>
       <ImageToolsContent />
     </Suspense>
   );

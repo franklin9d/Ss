@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import {
@@ -13,7 +12,7 @@ import {
   FiShield,
   FiZap,
   FiLock,
-  FiArrowRight,
+  FiArrowLeft,
   FiCheck,
   FiStar,
 } from 'react-icons/fi';
@@ -21,36 +20,36 @@ import {
 const tools = [
   {
     icon: FiFile,
-    title: 'PDF Tools',
-    description: 'Merge, split, compress, and convert PDF files',
+    title: 'أدوات PDF',
+    description: 'دمج، تقسيم، ضغط، وتحويل ملفات PDF',
     color: 'from-red-500 to-orange-500',
     href: '/tools/pdf',
   },
   {
     icon: FiImage,
-    title: 'Image Tools',
-    description: 'Convert, resize, and compress images',
+    title: 'أدوات الصور',
+    description: 'تحويل، تغيير حجم، وضغط الصور',
     color: 'from-blue-500 to-cyan-500',
     href: '/tools/images',
   },
   {
     icon: FiFilm,
-    title: 'Media Tools',
-    description: 'Convert video formats and extract audio',
+    title: 'أدوات الوسائط',
+    description: 'تحويل صيغ الفيديو واستخراج الصوت',
     color: 'from-purple-500 to-pink-500',
     href: '/tools/media',
   },
   {
     icon: FiFileText,
-    title: 'Document Tools',
-    description: 'Convert Word to PDF, Markdown to PDF',
+    title: 'أدوات المستندات',
+    description: 'تحويل Word إلى PDF و Markdown إلى PDF',
     color: 'from-emerald-500 to-teal-500',
     href: '/tools/docs',
   },
   {
     icon: FiPackage,
-    title: 'Utilities',
-    description: 'ZIP tools, OCR, and more',
+    title: 'أدوات مساعدة',
+    description: 'أدوات ZIP والتعرف على النصوص والمزيد',
     color: 'from-yellow-500 to-orange-500',
     href: '/tools/utilities',
   },
@@ -59,31 +58,29 @@ const tools = [
 const features = [
   {
     icon: FiZap,
-    title: 'Lightning Fast',
-    description: 'Process files in seconds with our optimized pipeline',
+    title: 'سريع كالبرق',
+    description: 'معالجة الملفات في ثوانٍ بفضل خطوط المعالجة المحسّنة',
   },
   {
     icon: FiShield,
-    title: 'Enterprise Security',
-    description: 'Your files are encrypted and automatically deleted after processing',
+    title: 'أمان على مستوى المؤسسات',
+    description: 'ملفاتك مشفرة ويتم حذفها تلقائياً بعد المعالجة',
   },
   {
     icon: FiLock,
-    title: 'Privacy First',
-    description: 'No data is stored permanently. Files expire in 24 hours',
+    title: 'الخصوصية أولاً',
+    description: 'لا يتم تخزين أي بيانات بشكل دائم. تنتهي صلاحية الملفات خلال 24 ساعة',
   },
 ];
 
 const stats = [
-  { value: '10M+', label: 'Files Processed' },
-  { value: '50K+', label: 'Happy Users' },
-  { value: '99.9%', label: 'Uptime' },
-  { value: '15+', label: 'File Tools' },
+  { value: '+10 مليون', label: 'ملف تمت معالجته' },
+  { value: '+50 ألف', label: 'مستخدم سعيد' },
+  { value: '99.9%', label: 'وقت التشغيل' },
+  { value: '+15', label: 'أداة ملفات' },
 ];
 
 export default function Home() {
-  const { data: session } = useSession();
-
   return (
     <div className="min-h-screen bg-gray-950">
       <Navbar />
@@ -100,36 +97,36 @@ export default function Home() {
             <div className="inline-flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/20 rounded-full px-4 py-1.5 mb-8">
               <FiStar className="text-indigo-400" size={14} />
               <span className="text-indigo-300 text-sm font-medium">
-                Trusted by 50,000+ professionals
+                مجاني بالكامل - بدون حدود
               </span>
             </div>
 
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-              All-in-One{' '}
-              <span className="gradient-text">File Lab</span>
+              مختبر{' '}
+              <span className="gradient-text">الملفات</span>
               <br />
-              for Modern Teams
+              الشامل والمجاني
             </h1>
 
             <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-              Convert, compress, merge, and transform your files with ease.
-              PDF tools, image processing, document conversion, and more &mdash;
-              all in one powerful platform.
+              حوّل، اضغط، ادمج، وعدّل ملفاتك بسهولة.
+              أدوات PDF، معالجة الصور، تحويل المستندات، والمزيد &mdash;
+              كل شيء في منصة واحدة قوية ومجانية.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
-                href={session ? '/dashboard' : '/register'}
+                href="/tools"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-2xl text-lg font-semibold hover:from-indigo-700 hover:to-purple-700 transition-all shadow-lg shadow-indigo-500/25"
               >
-                {session ? 'Go to Dashboard' : 'Start Free'}
-                <FiArrowRight />
+                ابدأ الآن مجاناً
+                <FiArrowLeft />
               </Link>
               <Link
-                href="/tools"
+                href="/dashboard"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border-2 border-gray-700 text-gray-300 px-8 py-4 rounded-2xl text-lg font-semibold hover:bg-gray-800 hover:text-white transition-all"
               >
-                Explore Tools
+                استكشف الأدوات
               </Link>
             </div>
 
@@ -151,11 +148,11 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              Powerful Tools for Every{' '}
-              <span className="gradient-text">File Type</span>
+              أدوات قوية لكل{' '}
+              <span className="gradient-text">نوع ملف</span>
             </h2>
             <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              Everything you need to work with files, all in one place
+              كل ما تحتاجه للعمل مع الملفات، في مكان واحد
             </p>
           </div>
 
@@ -174,7 +171,7 @@ export default function Home() {
                 <h3 className="text-white font-semibold text-lg mb-2">{tool.title}</h3>
                 <p className="text-gray-500 text-sm">{tool.description}</p>
                 <div className="mt-4 flex items-center gap-1 text-indigo-400 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                  Explore <FiArrowRight size={14} />
+                  استكشف <FiArrowLeft size={14} />
                 </div>
               </Link>
             ))}
@@ -183,16 +180,16 @@ export default function Home() {
             <div className="bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 rounded-2xl p-6 flex flex-col items-center justify-center text-center">
               <FiZap className="text-indigo-400 mb-3" size={32} />
               <h3 className="text-white font-semibold text-lg mb-2">
-                15+ Tools Available
+                +15 أداة متاحة
               </h3>
               <p className="text-gray-400 text-sm mb-4">
-                New tools added regularly
+                أدوات جديدة تُضاف باستمرار
               </p>
               <Link
                 href="/tools"
                 className="text-indigo-400 text-sm font-medium hover:text-indigo-300 transition-colors flex items-center gap-1"
               >
-                View All Tools <FiArrowRight size={14} />
+                عرض جميع الأدوات <FiArrowLeft size={14} />
               </Link>
             </div>
           </div>
@@ -204,8 +201,8 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              Built for{' '}
-              <span className="gradient-text">Security & Speed</span>
+              مصمم من أجل{' '}
+              <span className="gradient-text">الأمان والسرعة</span>
             </h2>
           </div>
 
@@ -230,61 +227,37 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Pricing Preview */}
+      {/* Free Plan Highlight */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              Simple{' '}
-              <span className="gradient-text">Pricing</span>
+              مجاني{' '}
+              <span className="gradient-text">بالكامل</span>
             </h2>
-            <p className="text-gray-400 text-lg">Start free, upgrade when you need more</p>
+            <p className="text-gray-400 text-lg">جميع الميزات متاحة مجاناً بدون حدود</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Free Plan */}
-            <div className="bg-gray-900/50 border border-gray-800 rounded-2xl p-8">
-              <h3 className="text-white font-semibold text-xl mb-2">Free</h3>
-              <div className="mb-6">
-                <span className="text-4xl font-bold text-white">$0</span>
-                <span className="text-gray-500 ml-1">/month</span>
-              </div>
-              <ul className="space-y-3 mb-8">
-                {['5 conversions/day', '10MB max file size', 'Basic formats', 'Standard speed'].map((f) => (
-                  <li key={f} className="flex items-center gap-2 text-gray-400 text-sm">
-                    <FiCheck className="text-gray-600" size={16} />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <Link
-                href="/register"
-                className="block w-full text-center border-2 border-gray-700 text-gray-300 py-3 rounded-xl font-medium hover:bg-gray-800 transition-all"
-              >
-                Get Started
-              </Link>
-            </div>
-
-            {/* Pro Plan */}
+          <div className="max-w-lg mx-auto">
             <div className="bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border-2 border-indigo-500/30 rounded-2xl p-8 relative">
               <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                 <span className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-xs font-bold px-4 py-1 rounded-full">
-                  MOST POPULAR
+                  مجاني للجميع
                 </span>
               </div>
-              <h3 className="text-white font-semibold text-xl mb-2">Pro</h3>
+              <h3 className="text-white font-semibold text-xl mb-2">الخطة المجانية</h3>
               <div className="mb-6">
-                <span className="text-4xl font-bold text-white">$9.99</span>
-                <span className="text-gray-400 ml-1">/month</span>
+                <span className="text-4xl font-bold text-white">$0</span>
+                <span className="text-gray-400 mr-1">/ للأبد</span>
               </div>
               <ul className="space-y-3 mb-8">
                 {[
-                  'Unlimited conversions',
-                  '100MB max file size',
-                  'All file formats',
-                  'Priority processing',
-                  'No ads',
-                  'API access',
+                  'تحويلات غير محدودة',
+                  'حجم ملف يصل إلى 100 ميجابايت',
+                  'جميع صيغ الملفات',
+                  'معالجة بأولوية عالية',
+                  'بدون إعلانات',
+                  'جميع الأدوات متاحة',
                 ].map((f) => (
                   <li key={f} className="flex items-center gap-2 text-gray-300 text-sm">
                     <FiCheck className="text-indigo-400" size={16} />
@@ -293,10 +266,10 @@ export default function Home() {
                 ))}
               </ul>
               <Link
-                href="/pricing"
+                href="/tools"
                 className="block w-full text-center bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 rounded-xl font-medium hover:from-indigo-700 hover:to-purple-700 transition-all shadow-lg shadow-indigo-500/25"
               >
-                Upgrade to Pro
+                ابدأ الآن
               </Link>
             </div>
           </div>
@@ -310,17 +283,17 @@ export default function Home() {
             <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSA2MCAwIEwgMCAwIDAgNjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-50" />
             <div className="relative">
               <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-                Ready to transform your files?
+                جاهز لتحويل ملفاتك؟
               </h2>
               <p className="text-indigo-100 text-lg mb-8 max-w-xl mx-auto">
-                Join thousands of professionals who trust File Lab for their daily file processing needs.
+                انضم لآلاف المستخدمين الذين يثقون بمختبر الملفات لاحتياجاتهم اليومية في معالجة الملفات.
               </p>
               <Link
-                href={session ? '/dashboard' : '/register'}
+                href="/tools"
                 className="inline-flex items-center gap-2 bg-white text-indigo-600 px-8 py-4 rounded-2xl text-lg font-semibold hover:bg-gray-100 transition-all"
               >
-                {session ? 'Go to Dashboard' : 'Start for Free'}
-                <FiArrowRight />
+                ابدأ مجاناً الآن
+                <FiArrowLeft />
               </Link>
             </div>
           </div>
