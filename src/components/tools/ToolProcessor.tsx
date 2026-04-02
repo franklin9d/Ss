@@ -1,8 +1,6 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 import FileUploader from '@/components/ui/FileUploader';
 import Button from '@/components/ui/Button';
 import Card, { CardContent } from '@/components/ui/Card';
@@ -41,15 +39,12 @@ export default function ToolProcessor({
   options,
   getOptions,
 }: ToolProcessorProps) {
-  const { data: session } = useSession();
-  const router = useRouter();
   const [files, setFiles] = useState<File[]>([]);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<ProcessResult | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const user = session?.user as Record<string, unknown> | undefined;
-  const maxSize = user?.plan === 'PRO' ? 100 * 1024 * 1024 : 10 * 1024 * 1024;
+  const maxSize = 100 * 1024 * 1024; // 100MB for everyone
 
   const handleFilesSelected = useCallback((selectedFiles: File[]) => {
     setFiles(selectedFiles);
@@ -58,14 +53,8 @@ export default function ToolProcessor({
   }, []);
 
   const handleProcess = async () => {
-    if (!session) {
-      toast.error('Please sign in to use this tool');
-      router.push('/login');
-      return;
-    }
-
     if (files.length === 0) {
-      toast.error('Please select at least one file');
+      toast.error('يرجى اختيار ملف واحد على الأقل');
       return;
     }
 
@@ -93,13 +82,13 @@ export default function ToolProcessor({
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.error || 'Processing failed');
+        throw new Error(data.error || 'فشلت المعالجة');
       }
 
       setResult(data.data);
-      toast.success('File processed successfully!');
+      toast.success('تمت معالجة الملف بنجاح!');
     } catch (err) {
-      const errorMsg = err instanceof Error ? err.message : 'Processing failed';
+      const errorMsg = err instanceof Error ? err.message : 'فشلت المعالجة';
       setError(errorMsg);
       toast.error(errorMsg);
     } finally {
@@ -113,19 +102,6 @@ export default function ToolProcessor({
         <h1 className="text-3xl font-bold text-white mb-2">{title}</h1>
         <p className="text-gray-400">{description}</p>
       </div>
-
-      {/* Plan limit info */}
-      {user?.plan !== 'PRO' && (
-        <div className="mb-6 flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/20 rounded-xl px-4 py-3">
-          <FiAlertTriangle className="text-yellow-400 flex-shrink-0" size={18} />
-          <p className="text-yellow-300 text-sm">
-            Free plan: 10MB max file size, 5 conversions/day.{' '}
-            <a href="/pricing" className="text-indigo-400 hover:text-indigo-300 font-medium">
-              Upgrade for more
-            </a>
-          </p>
-        </div>
-      )}
 
       {/* File Upload */}
       <Card className="mb-6">
@@ -144,7 +120,7 @@ export default function ToolProcessor({
       {options && (
         <Card className="mb-6">
           <CardContent>
-            <h3 className="text-white font-medium mb-4">Options</h3>
+            <h3 className="text-white font-medium mb-4">الخيارات</h3>
             {options}
           </CardContent>
         </Card>
@@ -158,7 +134,7 @@ export default function ToolProcessor({
         className="w-full mb-6"
         size="lg"
       >
-        {loading ? 'Processing...' : `Process ${files.length > 0 ? `(${files.length} file${files.length > 1 ? 's' : ''})` : ''}`}
+        {loading ? 'جارٍ المعالجة...' : `معالجة ${files.length > 0 ? `(${files.length} ملف${files.length > 1 ? 'ات' : ''})` : ''}`}
       </Button>
 
       {/* Error */}
@@ -181,21 +157,21 @@ export default function ToolProcessor({
               <div className="w-8 h-8 bg-emerald-500/10 rounded-full flex items-center justify-center">
                 <FiCheck className="text-emerald-400" size={18} />
               </div>
-              <h3 className="text-white font-semibold">Processing Complete</h3>
+              <h3 className="text-white font-semibold">تمت المعالجة بنجاح</h3>
             </div>
 
             <div className="space-y-3 mb-6">
               <div className="flex items-center justify-between">
-                <span className="text-gray-400 text-sm">Output File</span>
+                <span className="text-gray-400 text-sm">ملف الإخراج</span>
                 <span className="text-white text-sm font-medium">{result.outputFileName}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-gray-400 text-sm">File Size</span>
+                <span className="text-gray-400 text-sm">حجم الملف</span>
                 <span className="text-white text-sm">{formatBytes(result.outputFileSize)}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-gray-400 text-sm">Processing Time</span>
-                <Badge variant="success">{result.processingTime}ms</Badge>
+                <span className="text-gray-400 text-sm">وقت المعالجة</span>
+                <Badge variant="success">{result.processingTime} مللي ثانية</Badge>
               </div>
             </div>
 
@@ -205,7 +181,7 @@ export default function ToolProcessor({
               className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-3 rounded-xl font-medium hover:from-emerald-700 hover:to-teal-700 transition-all"
             >
               <FiDownload size={18} />
-              Download Result
+              تحميل النتيجة
             </a>
           </CardContent>
         </Card>

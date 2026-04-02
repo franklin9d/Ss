@@ -17,7 +17,7 @@ interface FileUploaderProps {
 export default function FileUploader({
   accept,
   multiple = false,
-  maxSize = 10 * 1024 * 1024,
+  maxSize = 100 * 1024 * 1024,
   maxFiles = 10,
   onFilesSelected,
   className,
@@ -34,11 +34,11 @@ export default function FileUploader({
 
       for (const file of fileList) {
         if (file.size > maxSize) {
-          setError(`${file.name} exceeds ${formatBytes(maxSize)} limit`);
+          setError(`${file.name} يتجاوز الحد الأقصى ${formatBytes(maxSize)}`);
           continue;
         }
         if (validFiles.length >= maxFiles) {
-          setError(`Maximum ${maxFiles} files allowed`);
+          setError(`الحد الأقصى ${maxFiles} ملفات مسموح`);
           break;
         }
         validFiles.push(file);
@@ -110,14 +110,14 @@ export default function FileUploader({
         />
 
         <p className="text-lg font-medium text-gray-300 mb-1">
-          {isDragging ? 'Drop files here' : 'Drag & drop files here'}
+          {isDragging ? 'أفلت الملفات هنا' : 'اسحب وأفلت الملفات هنا'}
         </p>
         <p className="text-sm text-gray-500 mb-2">
-          or click to browse
+          أو انقر للتصفح
         </p>
         <p className="text-xs text-gray-600">
-          Max {formatBytes(maxSize)} per file
-          {multiple && ` | Up to ${maxFiles} files`}
+          الحد الأقصى {formatBytes(maxSize)} لكل ملف
+          {multiple && ` | حتى ${maxFiles} ملفات`}
         </p>
       </div>
 

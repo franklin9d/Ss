@@ -9,15 +9,15 @@ const docTools = [
   {
     id: 'word-to-pdf',
     operation: 'WORD_TO_PDF' as FileOperation,
-    title: 'Word to PDF',
-    description: 'Convert Microsoft Word documents (.doc, .docx) to PDF.',
+    title: 'Word إلى PDF',
+    description: 'تحويل مستندات Microsoft Word (.doc, .docx) إلى PDF.',
     acceptedTypes: '.doc,.docx',
   },
   {
     id: 'markdown-to-pdf',
     operation: 'MARKDOWN_TO_PDF' as FileOperation,
-    title: 'Markdown to PDF',
-    description: 'Convert Markdown files to well-formatted PDF documents.',
+    title: 'Markdown إلى PDF',
+    description: 'تحويل ملفات Markdown إلى مستندات PDF منسقة.',
     acceptedTypes: '.md,.txt',
   },
 ];
@@ -60,7 +60,7 @@ function DocToolsContent() {
 
 export default function DocToolsPage() {
   return (
-    <Suspense fallback={<div className="animate-pulse text-gray-500 py-12 text-center">Loading tools...</div>}>
+    <Suspense fallback={<div className="animate-pulse text-gray-500 py-12 text-center">جارٍ تحميل الأدوات...</div>}>
       <DocToolsContent />
     </Suspense>
   );

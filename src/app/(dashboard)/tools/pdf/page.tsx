@@ -9,8 +9,8 @@ const pdfTools = [
   {
     id: 'image-to-pdf',
     operation: 'IMAGE_TO_PDF' as FileOperation,
-    title: 'Image to PDF',
-    description: 'Convert one or more images into a single PDF document.',
+    title: 'صورة إلى PDF',
+    description: 'تحويل صورة واحدة أو أكثر إلى مستند PDF واحد.',
     acceptedTypes: '.jpg,.jpeg,.png,.gif,.webp,.bmp',
     multiple: true,
     maxFiles: 20,
@@ -18,8 +18,8 @@ const pdfTools = [
   {
     id: 'text-to-pdf',
     operation: 'TEXT_TO_PDF' as FileOperation,
-    title: 'Text to PDF',
-    description: 'Convert plain text files into PDF documents.',
+    title: 'نص إلى PDF',
+    description: 'تحويل الملفات النصية إلى مستندات PDF.',
     acceptedTypes: '.txt',
     multiple: false,
     maxFiles: 1,
@@ -27,8 +27,8 @@ const pdfTools = [
   {
     id: 'merge-pdf',
     operation: 'MERGE_PDF' as FileOperation,
-    title: 'Merge PDF',
-    description: 'Combine multiple PDF files into a single document.',
+    title: 'دمج PDF',
+    description: 'دمج عدة ملفات PDF في مستند واحد.',
     acceptedTypes: '.pdf',
     multiple: true,
     maxFiles: 20,
@@ -36,8 +36,8 @@ const pdfTools = [
   {
     id: 'split-pdf',
     operation: 'SPLIT_PDF' as FileOperation,
-    title: 'Split PDF',
-    description: 'Split a PDF into separate pages or page ranges.',
+    title: 'تقسيم PDF',
+    description: 'تقسيم ملف PDF إلى صفحات أو نطاقات منفصلة.',
     acceptedTypes: '.pdf',
     multiple: false,
     maxFiles: 1,
@@ -45,8 +45,8 @@ const pdfTools = [
   {
     id: 'compress-pdf',
     operation: 'COMPRESS_PDF' as FileOperation,
-    title: 'Compress PDF',
-    description: 'Reduce the file size of your PDF documents.',
+    title: 'ضغط PDF',
+    description: 'تقليل حجم ملفات PDF الخاصة بك.',
     acceptedTypes: '.pdf',
     multiple: false,
     maxFiles: 1,
@@ -93,7 +93,7 @@ function PdfToolsContent() {
 
 export default function PdfToolsPage() {
   return (
-    <Suspense fallback={<div className="animate-pulse text-gray-500 py-12 text-center">Loading tools...</div>}>
+    <Suspense fallback={<div className="animate-pulse text-gray-500 py-12 text-center">جارٍ تحميل الأدوات...</div>}>
       <PdfToolsContent />
     </Suspense>
   );
